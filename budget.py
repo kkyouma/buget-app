@@ -38,6 +38,25 @@ class Category:
         output = title + transactions + "Total: " + str(total)
         return output
 
+    def get_withdraws(self):
+        withdraws = 0
+        for item in self.ledger:
+            if item["amount"] < 0:
+                withdraws += abs(item["amount"])
+        return withdraws
+
+    def get_totals(self):
+        pass
+
 
 def create_spend_chart(categories):
-    pass
+    category_names = []
+    category_withdraws = []
+    category_totals = 0
+
+    for category in categories:
+        category_names.append(category.name)
+        category_withdraws.append(category.get_withdraws())
+        category_totals += category.get_withdraws()
+
+    return category_names, category_withdraws, category_totals
