@@ -45,18 +45,31 @@ class Category:
                 withdraws += abs(item["amount"])
         return withdraws
 
-    def get_totals(self):
-        pass
-
 
 def create_spend_chart(categories):
     category_names = []
-    category_withdraws = []
+    category_spends = []
+    percentages = []
     category_totals = 0
 
     for category in categories:
         category_names.append(category.name)
-        category_withdraws.append(category.get_withdraws())
+        category_spends.append(category.get_withdraws())
         category_totals += category.get_withdraws()
 
-    return category_names, category_withdraws, category_totals
+    for spend in category_spends:
+        percentage = int((spend/category_totals) * 100)
+        percentages.append(percentage)
+
+    # start render graph
+    graph = "Percentage spent by category\n"
+
+    for i in range(100, -10, -10):
+        line = f"{i:3}| "
+        for percentage in percentages:
+            if percentage >= i:
+                line += " o "
+            else:
+                line += "   "
+        graph += line + "\n"
+    return graph
