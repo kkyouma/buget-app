@@ -65,11 +65,27 @@ def create_spend_chart(categories):
     graph = "Percentage spent by category\n"
 
     for i in range(100, -10, -10):
-        line = f"{i:3}| "
+        line = f"{i:3}|"
         for percentage in percentages:
             if percentage >= i:
                 line += " o "
             else:
                 line += "   "
         graph += line + "\n"
+
+    graph += "    " + "-" * (3 * (len(categories)) + 1) + "\n"
+
+    largest_name = max([len(name) for name in category_names])
+    for i in range(largest_name):
+        line = "     "
+        for name in category_names:
+            if i < len(name):
+                line += f"{name[i]}  "
+            else:
+                line += "   "
+        if i < largest_name:
+            graph += line + "\n"
+        else:
+            graph += line
+
     return graph
