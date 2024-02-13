@@ -33,7 +33,9 @@ class Category:
         total = 0
         transactions = ""
         for item in self.ledger:
-            transactions += f"{item["description"][:23]:23}" + f"{item["amount"]:>7.2f}" + '\n'
+            transactions += (
+                f"{item['description'][:23]:23}" + f"{item['amount']:>7.2f}" + "\n"
+            )
             total += item["amount"]
         output = title + transactions + "Total: " + str(total)
         return output
@@ -58,17 +60,17 @@ def create_spend_chart(categories):
         category_totals += category.get_withdraws()
 
     for spend in category_spends:
-        percentage = int((spend/category_totals) * 100)
+        percentage = int((spend / category_totals) * 100)
         percentages.append(percentage)
 
     # start render graph
     graph = "Percentage spent by category\n"
 
     for i in range(100, -10, -10):
-        line = f"{i:3}|"
+        line = f"{i:3}| "
         for percentage in percentages:
             if percentage >= i:
-                line += " o "
+                line += "o  "
             else:
                 line += "   "
         graph += line + "\n"
@@ -83,7 +85,7 @@ def create_spend_chart(categories):
                 line += f"{name[i]}  "
             else:
                 line += "   "
-        if i < largest_name:
+        if i < largest_name - 1:
             graph += line + "\n"
         else:
             graph += line
