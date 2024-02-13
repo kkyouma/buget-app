@@ -8,7 +8,7 @@ class Category:
 
     def withdraw(self, amount, description=""):
         if self.check_funds(amount):
-            self.ledger.append({"amount": amount, "description": description})
+            self.ledger.append({"amount": -amount, "description": description})
             return True
         return False
 
@@ -27,6 +27,16 @@ class Category:
 
     def check_funds(self, amount):
         return amount <= self.get_balance()
+
+    def __str__(self):
+        title = f"{self.name.center(30, '*')}\n"
+        total = 0
+        transactions = ""
+        for item in self.ledger:
+            transactions += f"{item["description"][:23]:23}" + f"{item["amount"]:>7.2f}" + '\n'
+            total += item["amount"]
+        output = title + transactions + "Total: " + str(total)
+        return output
 
 
 def create_spend_chart(categories):
